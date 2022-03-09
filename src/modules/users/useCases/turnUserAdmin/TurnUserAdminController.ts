@@ -6,7 +6,9 @@ class TurnUserAdminController {
   constructor(private turnUserAdminUseCase: TurnUserAdminUseCase) {}
 
   handle(request: Request, response: Response): Response {
-    // Complete aqui
+    const { id } = request.body;
+    this.turnUserAdminUseCase.execute(id);
+    return response.status(201).send();
   }
 }
 
