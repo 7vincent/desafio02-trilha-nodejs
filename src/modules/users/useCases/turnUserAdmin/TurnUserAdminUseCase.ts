@@ -8,13 +8,13 @@ interface IRequest {
 class TurnUserAdminUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  execute({ user_id }: IRequest): User | void {
+  execute({ user_id }: IRequest): User {
     const userAlreadExist = this.usersRepository.findById(user_id);
-    if (userAlreadExist) {
-      const user = this.usersRepository.turnAdmin(userAlreadExist);
-      return user;
+    if (!userAlreadExist) {
+      throw new Error("User does exists!");
     }
-    throw new Error("Mensagem do erro");
+
+    return this.usersRepository.turnAdmin(userAlreadExist);
   }
 }
 
